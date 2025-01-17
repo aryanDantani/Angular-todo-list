@@ -1,0 +1,244 @@
+<div style="margin-top: 0">
+  <h2 style="color: #000">{{ isEdit ? "Edit Todo" : "Add Todo" }}</h2>
+  <div>
+    <form (ngSubmit)="onSubmit()" #todoForm="ngForm" style="color: #000">
+      <!-- Title Field -->
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input
+          id="title"
+          style="color: #000; background-color: transparent"
+          name="title"
+          class="form-control"
+          [(ngModel)]="title"
+          #titleInput="ngModel"
+          required
+          minlength="3"
+        />
+        <div
+          *ngIf="titleInput.invalid && titleInput.touched"
+          class="text-danger"
+        >
+          <div *ngIf="titleInput.errors?.['required']">Title is required.</div>
+          <div *ngIf="titleInput.errors?.['minlength']">
+            Title must be at least 3 characters long.
+          </div>
+        </div>
+      </div>
+
+      <!-- Description Field -->
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          class="form-control"
+          [(ngModel)]="description"
+          #descriptionInput="ngModel"
+          style="color: #000; background-color: transparent"
+          required
+          minlength="5"
+        ></textarea>
+        <div
+          *ngIf="descriptionInput.invalid && descriptionInput.touched"
+          class="text-danger"
+        >
+          <div *ngIf="descriptionInput.errors?.['required']">
+            Description is required.
+          </div>
+          <div *ngIf="descriptionInput.errors?.['minlength']">
+            Description must be at least 5 characters long.
+          </div>
+        </div>
+      </div>
+
+      <!-- Phone Number Field -->
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone Number</label>
+        <div class="input-group">
+          <select
+            id="countryCode"
+            name="countryCode"
+            class="form-select"
+            [(ngModel)]="countryCode"
+            (change)="onCountryCodeChange()"
+            required
+          >
+            <option value="+91">+91 (India)</option>
+            <option value="+1">+1 (USA)</option>
+            <option value="+44">+44 (UK)</option>
+          </select>
+          <input
+            id="phone"
+            type="text"
+            name="phone"
+            class="form-control"
+            [(ngModel)]="phone"
+            #phoneInput="ngModel"
+            required
+            [pattern]="phonePattern"
+            placeholder="Enter phone number"
+          />
+        </div>
+        <p>Formatted Phone: {{ phone | phoneNumber : countryCode }}</p>
+
+        <div
+          *ngIf="phoneInput.invalid && phoneInput.touched"
+          class="text-danger"
+        >
+          <div *ngIf="phoneInput.errors?.['required']">
+            Phone number is required.
+          </div>
+          <div *ngIf="phoneInput.errors?.['pattern']">
+            Invalid phone number for the selected region.
+          </div>
+        </div>
+      </div>
+
+      <!-- Date Field -->
+      <div class="mb-3">
+        <label for="date" class="form-label">Date</label>
+        <input
+          id="date"
+          type="date"
+          name="date"
+          class="form-control"
+          [(ngModel)]="date"
+          #dateInput="ngModel"
+          required
+        />
+        <div *ngIf="dateInput.invalid && dateInput.touched" class="text-danger">
+          <div *ngIf="dateInput.errors?.['required']">Date is required.</div>
+        </div>
+      </div>
+      <!-- add number according the regions -->
+
+      <!-- Start Time Field -->
+      <div class="mb-3">
+        <label for="startTime" class="form-label">Start Time</label>
+        <div class="input-group">
+          <input
+            id="startTime"
+            type="time"
+            name="startTime"
+            class="form-control"
+            [(ngModel)]="startTime"
+            #startTimeInput="ngModel"
+            required
+          />
+          <select
+            class="form-select"
+            [(ngModel)]="startMeridian"
+            name="startMeridian"
+            #startMeridianInput="ngModel"
+            required
+          >
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+          </select>
+        </div>
+        <div
+          *ngIf="startTimeInput.invalid && startTimeInput.touched"
+          class="text-danger"
+        >
+          <div *ngIf="startTimeInput.errors?.['required']">
+            Start time is required.
+          </div>
+        </div>
+      </div>
+
+      <!-- End Time Field -->
+      <div class="mb-3">
+        <label for="endTime" class="form-label">End Time</label>
+        <div class="input-group">
+          <input
+            id="endTime"
+            type="time"
+            name="endTime"
+            class="form-control"
+            [(ngModel)]="endTime"
+            #endTimeInput="ngModel"
+            required
+          />
+          <select
+            class="form-select"
+            [(ngModel)]="endMeridian"
+            name="endMeridian"
+            #endMeridianInput="ngModel"
+            required
+          >
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+          </select>
+        </div>
+        <div
+          *ngIf="endTimeInput.invalid && endTimeInput.touched"
+          class="text-danger"
+        >
+          <div *ngIf="endTimeInput.errors?.['required']">
+            End time is required.
+          </div>
+        </div>
+      </div>
+
+      <!-- Category Field -->
+      <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <select
+          id="category"
+          name="category"
+          class="form-control"
+          [(ngModel)]="category"
+          #categoryInput="ngModel"
+          required
+        >
+          <option value="" disabled>Select Category</option>
+          <option value="technical">Technical</option>
+          <option value="non-technical">Non-technical</option>
+          <option value="UI-UX">UI-UX</option>
+        </select>
+        <div
+          *ngIf="categoryInput.invalid && categoryInput.touched"
+          class="text-danger"
+        >
+          <div *ngIf="categoryInput.errors?.['required']">
+            Category is required.
+          </div>
+        </div>
+      </div>
+
+      <!-- Image Upload Field -->
+      <div class="mb-3">
+        <label for="imageUrl" class="form-label">Upload Image</label>
+        <input
+          id="imageUrl"
+          type="file"
+          name="imageUrl"
+          class="form-control"
+          (change)="onImageSelected($event)"
+        />
+        <div *ngIf="imageUrl" class="mt-2">
+          <p>Uploaded Image:</p>
+          <img
+            [src]="imageUrl"
+            style="width: 180px; cursor: pointer"
+            (click)="openImagePreview(imageUrl)"
+          />
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary">
+        {{ isEdit ? "Save Changes" : "Add Todo" }}
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- Custom Image Preview Dialog -->
+<div *ngIf="isImagePreviewVisible" class="custom-dialog">
+  <div class="dialog-content">
+    <span class="close-btn" (click)="closeImagePreview()">×</span>
+    <img [src]="imageUrl" style="width: 100%" />
+  </div>
+</div>

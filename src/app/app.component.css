@@ -1,0 +1,13 @@
+@media (max-width: 600px) {
+  .sidenav {
+    width: 200px;
+  }
+
+  mat-sidenav {
+    position: fixed;
+  }
+
+  .content {
+    margin-left: 0;
+  }
+}

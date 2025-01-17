@@ -1,0 +1,172 @@
+<!-- <h2>Todo List</h2> -->
+
+<div
+  style="
+    background-color: #fff;
+    color: #000;
+    padding: 10px;
+    width: 100%;
+    max-width: 550px;
+    border-radius: 15px;
+  "
+>
+  <h3 style="position: relative; top: 5px">Home Page</h3>
+</div>
+
+<div
+  class="card"
+  style="
+    margin: 51px 0px;
+    padding: 15px;
+    width: 100%;
+    max-width: 500px;
+    color: #fff;
+    background-color: #000;
+    border: 1px solid #fff;
+    border-radius: 20px;
+  "
+>
+  <h5 class="card-header">Add Your todo here</h5>
+  <hr />
+  <div class="card-body">
+    <h4 class="card-title">Click below to Add Your todo</h4>
+    <button
+      style="margin-top: 15px"
+      type="button"
+      class="btn btn-outline-light"
+      (click)="navigateToAdd()"
+    >
+      Add New Todo
+    </button>
+  </div>
+</div>
+
+<div
+  style="
+    background-color: #fff;
+    color: #000;
+    padding: 10px;
+    width: 100%;
+    max-width: 550px;
+    border-radius: 15px;
+  "
+>
+  <h3 style="position: relative; top: 5px">Recently Added Todo</h3>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 50px">
+  <div
+    class="card border-warning mb-3"
+    style="width: 23.6%; height: 340px; max-width: 43rem; margin: 51px 0px"
+    *ngFor="let todo of todos"
+  >
+    <div
+      class="card-header"
+      style="
+        background: #000;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid;
+        color: #ffc107;
+      "
+    >
+      TodoNo:{{ todo.id }}
+      <div>
+        <button
+          (click)="navigateToEdit(todo.id)"
+          style="border: none; background-color: transparent; font-size: 28px"
+        >
+          <i class="fa-regular fa-pen-to-square" style="color: #63e6be"></i>
+        </button>
+        <button
+          (click)="delete(todo.id)"
+          style="border: none; background-color: transparent; font-size: 28px"
+        >
+          <i class="fa-solid fa-trash" style="color: #ff0000"></i>
+        </button>
+      </div>
+    </div>
+    <div class="card-body" style="background-color: #000; color: #fff">
+      <h5 class="card-title">Project Name:{{ todo.title }}</h5>
+      <p class="card-text">
+        Task Description: {{ todo.description | titlecase }}
+      </p>
+      <p class="card-text">
+        Task Posted Date: {{ todo.date | date : "fullDate" }}<br />
+        Task Duration: {{ todo.startTime }} {{ todo.startMeridian }} to
+        {{ todo.endTime }} {{ todo.endMeridian }}<br />
+        Phone Number: {{ todo.countryCode }} {{ todo.phone }}
+      </p>
+
+      <img
+        [src]="todo.imageUrl"
+        style="width: 180px"
+        (click)="openImagePreview(imageUrl)"
+      />
+    </div>
+  </div>
+</div>
+
+<!-- Custom Image Preview Dialog -->
+<div *ngIf="isImagePreviewVisible" class="custom-dialog">
+  <div class="dialog-content">
+    <span class="close-btn" (click)="closeImagePreview()">×</span>
+    <img [src]="imageUrl" style="width: 100%" />
+  </div>
+</div>
+
+<!-- <h2>What are the Pipe in Angular</h2>
+<div style="display: flex; gap: 20px">
+  <div
+    style="background-color: antiquewhite; padding: 18px; border-radius: 10px"
+  >
+    <span>1. LowerCasePipe</span>
+    <p>original value: {{ newTitle }}</p>
+    <p>after adding pipe: {{ newTitle | lowercase }}</p>
+  </div>
+  <div
+    style="background-color: antiquewhite; padding: 18px; border-radius: 10px"
+  >
+    <span>2. UpperCasePipe</span>
+    <p>original value: {{ newTitle }}</p>
+    <p>after adding pipe: {{ newTitle | uppercase }}</p>
+  </div>
+  <div
+    style="background-color: antiquewhite; padding: 18px; border-radius: 10px"
+  >
+    <span>3. TitleCasePipe</span>
+    <p>original value: {{ newDescription }}</p>
+    <p>after adding pipe: {{ newDescription | titlecase }}</p>
+  </div>
+  <div
+    style="background-color: antiquewhite; padding: 18px; border-radius: 10px"
+  >
+    <span>4. DatePipe</span>
+    <p>original value: {{ currentDate }}</p>
+    <p>after adding pipe: {{ currentDate | date }}</p>
+  </div>
+  <div
+    style="background-color: antiquewhite; padding: 18px; border-radius: 10px"
+  >
+    <span>5</span>
+    <p>original value:</p>
+    <p>after adding pipe:</p>
+  </div>
+  <div
+    style="background-color: antiquewhite; padding: 18px; border-radius: 10px"
+  >
+    <span>6</span>
+    <p>original value:</p>
+    <p>after adding pipe:</p>
+  </div>
+</div> -->
+
+<!-- <ul>
+  <li *ngFor="let todo of todos">
+    <h3>{{ todo.title }}</h3>
+    <p>{{ todo.description }}</p>
+    <button (click)="navigateToEdit(todo.id)">Edit</button>
+    <button (click)="delete(todo.id)">Delete</button>
+  </li>
+</ul> -->
